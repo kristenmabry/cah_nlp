@@ -2,11 +2,11 @@ import json
 from transformers import AutoTokenizer
 from transformers import AutoModelForMultipleChoice
 
-tokenizer = AutoTokenizer.from_pretrained("cah_model")
-model = AutoModelForMultipleChoice.from_pretrained("cah_model")
+tokenizer = AutoTokenizer.from_pretrained('../cah_model')
+model = AutoModelForMultipleChoice.from_pretrained('../cah_model')
 
 cards = {}
-with open('data/data_appropriate.json', 'r') as f:
+with open('../data/data_appropriate.json', 'r') as f:
     cards = json.load(f)
     f.close()
 

@@ -1,7 +1,7 @@
 import pandas as pd
 from sklearn.model_selection import GroupShuffleSplit 
 
-data = pd.read_csv('data/cah_2023_small.csv')
+data = pd.read_csv('../data/cah_2023_small.csv')
 data = data.drop(columns=[
     'Unnamed: 0',
     'Unnamed: 0.1',
@@ -19,6 +19,6 @@ val_split = splitter.split(train, groups=train['fake_round_id'])
 train_inds, val_inds = next(val_split)
 val: pd.DataFrame = train.iloc[val_inds]
 train: pd.DataFrame = train.iloc[train_inds]
-train.to_csv('data/train.csv')
-val.to_csv('data/val.csv')
-test.to_csv('data/test.csv')
+train.to_csv('../data/train.csv')
+val.to_csv('../data/val.csv')
+test.to_csv('../data/test.csv')

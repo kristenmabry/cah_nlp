@@ -11,14 +11,12 @@ import numpy as np
 from cah_funcs import *
 
 bert_model = 'bert-base-uncased'
-model_dir = 'cah_model'
+model_dir = '../cah_model'
 print('Bert:', bert_model)
 print('CAH Model:', model_dir)
 
-
-train = pd.read_csv('data/train.csv')
-val = pd.read_csv('data/val.csv')
-
+train = pd.read_csv('../data/train.csv')
+val = pd.read_csv('../data/val.csv')
 
 tokenizer = AutoTokenizer.from_pretrained(bert_model)
 tokenizer.add_special_tokens({'pad_token': '[PAD]'})
@@ -30,7 +28,6 @@ tokenized_val = val.groupby('fake_round_id').apply(preprocess_function, extra).r
 print('finish tokenizing val')
 train_set = datasets.Dataset.from_list(tokenized_train[0].to_list())
 val_set = datasets.Dataset.from_list(tokenized_val[0].to_list())
-
 
 @dataclass
 class DataCollatorForMultipleChoice:
@@ -44,10 +41,9 @@ class DataCollatorForMultipleChoice:
     pad_to_multiple_of: Optional[int] = None
 
     def __call__(self, features):
-        label_name = "label" if "label" in features[0].keys() else "labels"
-        labels = [feature.pop(label_name) for feature in features]
+        labels = [feature.pop('label') for feature in features]
         batch_size = len(features)
-        num_choices = len(features[0]["input_ids"])
+        num_choices = len(features[0]['input_ids'])
         flattened_features = [
             [{k: v[i] for k, v in feature.items()} for i in range(num_choices)] for feature in features
         ]
@@ -58,11 +54,11 @@ class DataCollatorForMultipleChoice:
             padding=self.padding,
             max_length=self.max_length,
             pad_to_multiple_of=self.pad_to_multiple_of,
-            return_tensors="pt",
+            return_tensors='pt',
         )
 
         batch = {k: v.view(batch_size, num_choices, -1) for k, v in batch.items()}
-        batch["labels"] = torch.tensor(labels, dtype=torch.int64)
+        batch['labels'] = torch.tensor(labels, dtype=torch.int64)
         return batch
 
 
@@ -74,16 +70,21 @@ def compute_metrics(eval_pred):
     predictions = np.argmax(predictions, axis=1)
     return accuracy.compute(predictions=predictions, references=labels)
 
+weight_decay = 0.01
+epochs = 3
+batch_size = 16
+learning_rate = 5e-5
+
 training_args = TrainingArguments(
     output_dir=model_dir,
     evaluation_strategy='epoch',
     save_strategy='epoch',
     load_best_model_at_end=True,
-    learning_rate=5e-5,
-    per_device_train_batch_size=16,
-    per_device_eval_batch_size=16,
-    num_train_epochs=3,
-    weight_decay=0.01,
+    learning_rate=learning_rate,
+    per_device_train_batch_size=batch_size,
+    per_device_eval_batch_size=batch_size,
+    num_train_epochs=epochs,
+    weight_decay=weight_decay,
 )
 
 trainer = Trainer(
@@ -101,10 +102,10 @@ print('finish train')
 trainer.save_model(model_dir)
 print('finish saving model')
 
-
 tokenizer = AutoTokenizer.from_pretrained(model_dir)
 model = AutoModelForMultipleChoice.from_pretrained(model_dir)
 
-evaluateDataset(model, tokenizer, 'validation', val)
 print('Bert:', bert_model)
 print('CAH Model:', model_dir)
+print(weight_decay, epochs, batch_size, learning_rate)
+evaluateDataset(model, tokenizer, 'validation', val)
