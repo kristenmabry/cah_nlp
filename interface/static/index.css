@@ -1,0 +1,78 @@
+body {
+    background: lightgray;
+}
+.title {
+    text-align: center;
+}
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.card {
+    border: 2px solid black;
+    border-radius: 8px;
+    padding: 1.5em;
+    margin: 1.5em;
+    height: 10em;
+    width: 8em;
+}
+.black-card {
+    background: black;
+    color: white;
+    border-color: white;
+}
+.white-card {
+    background: white;
+}
+.winner {
+    border: 5px solid rgb(0, 44, 0);
+    background: rgb(190, 255, 190);
+    font-weight: bold;
+}
+.double {
+    border: 1px solid black;
+    border-radius: 4px;
+    display: flex;
+    margin: 1em;
+}
+.first {
+    margin-right: .5em;
+}
+.second {
+    margin-left: .5em;
+}
+
+button {
+    margin: 1em;
+    padding: .5em;
+    font-size: 16px;
+}
+
+#loading {
+    display: none;
+    position: fixed; /* Sit on top of the page content */
+    width: 100%; /* Full width (cover the whole page) */
+    height: 100%; /* Full height (cover the whole page) */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5); /* Black background with opacity */
+    z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+    align-items: center;
+    justify-content: center;
+}
+#spinner {
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

@@ -1,0 +1,13 @@
+.vscode/
+cah_model_old/
+cah_model/
+data/
+interface/__pycache__/
+*.pptx
+*.docx
+*.o
+*.png
+*.pdf
+proj.ipynb
+proj.py
+sample.ipynb

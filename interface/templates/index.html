@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script type="text/javascript">
+    function loading(){
+        $("#loading").css('display', 'flex');
+    }
+  </script>
+  <meta charset="utf-8" />
+  <title>Cards Against Humanity</title>
+  <link type="text/css" rel="stylesheet"
+        href="{{ url_for('static',
+              filename='index.css')}}" />
+</head>
+<body>
+
+<h1 class="title">Cards Against Humanity</h1>
+
+<div class="container">
+  <div class="card black-card">{{black_card}}</div>
+</div>
+<div class="container">
+  {%for i in range(10)%}
+    {% if num_cards == 2 %}
+      <div class="double">
+        <div class="card first white-card {% if i == winner %} winner {% endif %}">{{white_cards[i]}}</div>
+        <div class="card second white-card {% if i == winner %} winner {% endif %}">{{white_cards[i+10]}}</div>
+      </div>
+    {% else %}
+      <div class="card white-card {% if i == winner %} winner {% endif %}">{{white_cards[i]}}</div>
+    {% endif %}
+  {%endfor%}
+</div>
+
+<div id="loading">
+  <div id="spinner"></div>
+</div>
+
+<div class="container buttons">
+  <form action="/selectwinner" method="POST" onclick="loading()">
+    <button type="submit">Show Winner</button>
+  </form>
+  <form action="/refresh" method="POST">
+    <button type="submit">Refresh</button>
+  </form>
+</div>
+
+</body>
+</html>
