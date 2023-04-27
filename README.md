@@ -11,6 +11,8 @@
 - Run `python train.py` to train a model. It will save the model in a folder called `cah_model`.
 - Run `python eval.py` to get the accuracies for the different datasets.
 
+Note: The model was too big to upload to github, so you'll have to train a new one yourself.
+
 ## Interface
 - Go into the `interface` folder.
 - Run `python app.py` to run the website.
