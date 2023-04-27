@@ -1,11 +1,11 @@
 .vscode/
 cah_model_old/
 cah_model/
-data/
+data/*.csv
+data/*.zip
 interface/__pycache__/
 *.pptx
 *.docx
-*.o
 *.png
 *.pdf
 proj.ipynb

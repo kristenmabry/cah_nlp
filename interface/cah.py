@@ -6,7 +6,8 @@ tokenizer = AutoTokenizer.from_pretrained('../cah_model')
 model = AutoModelForMultipleChoice.from_pretrained('../cah_model')
 
 cards = {}
-with open('../data/data_appropriate.json', 'r') as f:
+isAppropriate = True
+with open(f'../data/data{"_appropriate" if isAppropriate else ""}.json', 'r') as f:
     cards = json.load(f)
     f.close()
 

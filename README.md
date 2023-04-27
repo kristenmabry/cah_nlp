@@ -15,3 +15,11 @@
 - Go into the `interface` folder.
 - Run `python app.py` to run the website.
 - Go to `localhost:5000` to view and interact with the website.
+- Press the `refresh` button to get a new round.
+- Press the `show winner` button to highlight the model's chosen winner.
+
+Note: Right now, the interface is set up to user the filtered, appropriate cards. This can be changed in `interface/cah.py` in line 9 by setting `isAppropriate` to `false`.
+
+
+## Results
+To view the raw results from my project, look at the `results.o` output file. This was the generated file from the Borah cluster when evaluating on the different datasets. Searching for `total:` will allow you to easily find the different accuracies. `Popular` refers to how many times the most popular card was chosen as the winner by the model.
